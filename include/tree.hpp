@@ -12,46 +12,72 @@ private:
 private:
     node_t * root_;
 public:
+    node_t * root() {
+        return root_;
+    }
     tree_t() {
         root_->value = nullptr;
     }
-    
-    node_t root_() {
-        return root_;
-    }
-    
+
     void insert(int value) {
-        if (root_ = nullptr) {
+        if (root_ == nullptr) {
             root_ = new node_t;
+            root_->left = nullptr;
+            root_->right = nullptr;
+            root_->value = value;
         }
-        bool res = true;
-        while(res == 1) {
-            if (root_->value == nullptr) {
-                root_->value  = value;
-                res = false;
+        else {
+            node_t * ptr = root_;
+            while (root_ != nullptr) {
+                if (value < root_->value) {
+                    if(root_->left->value == nullptr) {
+                        root_->left->value = value;
+                        return;
+                    }
+                    else {
+                        root_ = root_->left;
+                    }
+                }
+                else if (value >= root_->value) {
+                    if(root_->right->value == nullptr) {
+                        root_->right->value = value;
+                        return;
+                    }
+                    else {
+                        root_ = root_->right;
+                    }
+                }
             }
-            else if(value < root_->value) {
-                root_ = root_->left;
-            }
-            else if(value > root_->value) {
-                root_ = root_->right;
-            }
+            root_ = ptr;
         }
     }
     bool find(int value) const {
         bool res = false;
-        while(value != root_->value) {
-            if( value == root_->value ) {
-                res = true;
-                return res;
-            }
-            else if (value < root_->value) {
-                root_ = root_->left;
+        if (root_ == nullptr) {
+            return false;
+        }
+        if (root_->value == value) {
+            return true;
+        }
+        node_t *ptr = root_;
+        while (ptr != nullptr) {
+            if (value < root_->value) {
+                if (root_->left->value == value) {
+                    return true;
+                } else {
+                    ptr = ptr->left;
+                }
             }
             else if (value > root_->value) {
-                root_ = root_->right;
+                    if (root_->right->value == value) {
+                        return true;
+                    } 
+                    else 
+                    {
+                        ptr = ptr->right;
+                    }
+                }
             }
-        }
         return res;
     }
     void print(std::ostream & stream) const {
