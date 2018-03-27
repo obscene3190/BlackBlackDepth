@@ -13,11 +13,17 @@ private:
     node_t * root_;
 public:
     tree_t() {
-        root_ = new node_t;
         root_->value = nullptr;
     }
+    
+    node_t root_() {
+        return root_;
+    }
+    
     void insert(int value) {
-        
+        if (root_ = nullptr) {
+            root_ = new node_t;
+        }
         bool res = true;
         while(res == 1) {
             if (root_->value == nullptr) {
