@@ -101,6 +101,15 @@ public:
     node_t * root() {
         return root_;
     }
+    void delete_(node_t * ptr) {
+        if (ptr->right) {
+	    delete_(ptr->right);
+        }
+        if (ptr->left) {
+	    delete_(ptr->left);
+        }
+	delete ptr;
+	}
 };
 
 bool read(tree_t & tree) {
