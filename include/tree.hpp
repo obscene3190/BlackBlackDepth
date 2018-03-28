@@ -14,7 +14,7 @@ private:
     node_t * root_;
 public:
     tree_t() {
-        root_ = 0;
+        root_ = nullptr;
     }
 
     void insert(int value) {
