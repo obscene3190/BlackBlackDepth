@@ -110,6 +110,9 @@ public:
         }
 	delete ptr;
 	}
+    ~tree_t () {
+	delete_(root_);
+     }		
 };
 
 bool read(tree_t & tree) {
