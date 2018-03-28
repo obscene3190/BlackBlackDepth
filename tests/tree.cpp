@@ -6,7 +6,7 @@
 TEST_CASE("creating tree")
 {
 	tree_t tree;
-	REQUIRE( tree.root() == 0 );
+	REQUIRE( tree.root() == nullptr );
 }
 
 /*TEST_CASE("adding tree")
