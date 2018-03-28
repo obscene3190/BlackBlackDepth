@@ -103,7 +103,7 @@ public:
     }
 };
 
-bool read(tree_t tree) {
+bool read(tree_t & tree) {
     char op;
     int value;
     std::string string;
@@ -126,18 +126,4 @@ bool read(tree_t tree) {
 	    }
 	}
 	return true;
-}
-
-int main() {
- tree_t tree;
- /*tree.insert(5);
- tree.insert(2);
- tree.insert(6);
- tree.insert(1);
- tree.insert(8);*/
- read(tree);
-  tree.print(std::cout, tree.root(), 1); 
- read(tree);
- read(tree);
- tree.print(std::cout, tree.root(), 1); 
 }
