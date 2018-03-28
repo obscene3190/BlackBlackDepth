@@ -1,5 +1,6 @@
 #include <iostream>
-
+#include <sstream>
+#include <string>
 
 class tree_t
 {
@@ -95,6 +96,35 @@ public:
 	}
 };
 
-int main() {
+bool read(tree_t tree) {
+    char op;
+    int value;
+    std::string string;
+	getline(std::cin, string);
+	std::istringstream stream(string);
+	if (stream >> op && op == 'q') {
+	    return false;
+	}
+	else if (stream >> op && op == '=') {
+	    tree.print(std::cout, tree.root(), 1);
+	    return true;
+	}
+	else if (stream >> op && 
+	    (op == '+' || op == '?') &&  
+	    stream >> value) {
+		if (op == '+') {
+			tree.insert(value);
+			return true;
+		}
+		else if (op == '?' ) {
+			tree.find(value);
+			return true;
+		}
+	}
+	return true;
+}
 
+int main() {
+ tree_t tree;
+ while(read(tree)) {}
 }
