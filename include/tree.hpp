@@ -56,8 +56,13 @@ public:
 						ptr = ptr->right;
 					}
 				}
+				else {
+					ptr->value = value;
+					ptr->left = nullptr;
+					ptr->right = nullptr;
+					return;
+				}
 			}
-			//root_ = ptr;
         }
     }
     bool find(int value) const {
