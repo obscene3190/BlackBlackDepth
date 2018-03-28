@@ -101,19 +101,21 @@ public:
     node_t * root() const {
         return root_;
     }
-    void delete(node_t * ptr) {
+    void delete1(node_t * ptr) {
         if (ptr != nullptr) {
 		if (ptr->right) {
-	    		delete(ptr->right);
+	    		delete1(ptr->right);
         		}
         	if (ptr->left) {
-	    		delete(ptr->left);
+	    		delete1(ptr->left);
         		}
 		delete ptr;
 		}
 	}
     ~tree_t () {
-	delete(root_);
+	if( root_ != nullptr) {
+		delete1(root_);
+	}
      }		
 };
 
