@@ -102,7 +102,7 @@ public:
         return root_;
     }
     void delete(node_t * ptr) {
-        if (root_ != nullptr) {
+        if (ptr != nullptr) {
 		if (ptr->right) {
 	    		delete(ptr->right);
         		}
