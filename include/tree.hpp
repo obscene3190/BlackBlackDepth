@@ -13,9 +13,6 @@ private:
 private:
     node_t * root_;
 public:
-    node_t * root() {
-        return root_;
-    }
     tree_t() {
         root_ = nullptr;
     }
@@ -23,9 +20,9 @@ public:
     void insert(int value) {
         if (root_ == nullptr) {
             root_ = new node_t;
+            root_->value = value;
             root_->left = nullptr;
             root_->right = nullptr;
-            root_->value = value;
         }
         else {
 			node_t * ptr = root_;
@@ -101,6 +98,9 @@ public:
 		}
 	}
     }
+    node_t * root() {
+        return root_;
+    }
 };
 
 bool read(tree_t tree) {
@@ -109,29 +109,35 @@ bool read(tree_t tree) {
     std::string string;
 	getline(std::cin, string);
 	std::istringstream stream(string);
-	if (stream >> op && op == 'q') {
-	    return false;
-	}
-	else if (stream >> op && op == '=') {
-	    tree.print(std::cout, tree.root(), 1);
-	    return true;
-	}
-	else if (stream >> op && 
-	    (op == '+' || op == '?') &&  
-	    stream >> value) {
-		if (op == '+') {
-			tree.insert(value);
-			return true;
-		}
-		else if (op == '?' ) {
-			tree.find(value);
-			return true;
-		}
+	if( stream >> op && ( op == '=' || op == '+' || op == '?' || op == 'q')) {
+	    if (op == 'q') {
+	        return false;
+    	}
+        else if (op == '=') {
+	        tree.print(std::cout, tree.root(), 1);
+	    }
+	    else if ((op == '+' || op == '?') && stream >> value) {
+		    if (op == '+') {
+			    tree.insert(value);
+	    	}
+		    else if (op == '?') {
+		    	std::cout << tree.find(value) << std::endl;
+	    	}
+	    }
 	}
 	return true;
 }
 
 int main() {
  tree_t tree;
- while(read(tree)) {}
+ /*tree.insert(5);
+ tree.insert(2);
+ tree.insert(6);
+ tree.insert(1);
+ tree.insert(8);*/
+ read(tree);
+  tree.print(std::cout, tree.root(), 1); 
+ read(tree);
+ read(tree);
+ tree.print(std::cout, tree.root(), 1); 
 }
