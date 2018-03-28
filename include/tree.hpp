@@ -79,7 +79,8 @@ public:
         return false;
     }
     void print(std::ostream & stream ,  node_t * ptr, size_t i) const {
-	if (ptr->right != nullptr) {
+	if (ptr) {
+		if (ptr->right != nullptr) {
 		i++;
 		print(stream ,ptr->right, i);
 		i--;
@@ -94,6 +95,7 @@ public:
 		i--;
 		}
 	}
+    }
 };
 
 bool read(tree_t tree) {
