@@ -14,7 +14,7 @@ private:
     node_t * root_;
 public:
     tree_t() {
-        root_ = nullptr;
+        root_ = 0;
     }
 
     void insert(int value) {
@@ -98,7 +98,7 @@ public:
 		}
 	}
     }
-    node_t * root() {
+    node_t * root() const {
         return root_;
     }
     void delete_(node_t * ptr) {
