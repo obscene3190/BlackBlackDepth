@@ -27,29 +27,34 @@ public:
             root_->value = value;
         }
         else {
-            node_t * ptr = root_;
-            while (root_ != nullptr) {
-                if (value < root_->value) {
-                    if(root_->left->value == 0) {
-                        root_->left->value = value;
-                        
-                        return;
-                    }
-                    else {
-                        root_ = root_->left;
-                    }
-                }
-                else if (value >= root_->value) {
-                    if(root_->right->value == 0) {
-                        root_->right->value = value;
-                        return;
-                    }
-                    else {
-                        root_ = root_->right;
-                    }
-                }
-            }
-            root_ = ptr;
+			node_t * ptr = root_;
+			while (ptr != nullptr) {
+				if (value < ptr->value) {
+					if (ptr->left == nullptr) {
+						ptr = ptr->left;
+						ptr->value = value;
+						ptr->left = nullptr;
+						ptr->right = nullptr;
+						return;
+					}
+					else {
+						ptr = ptr->left;
+					}
+				}
+				else if (value >= ptr->value) {
+					if (ptr->right == nullptr) {
+						ptr = ptr->right;
+						ptr->value = value;
+						ptr->left = nullptr;
+						ptr->right = nullptr;
+						return;
+					}
+					else {
+						ptr = ptr->right;
+					}
+				}
+			}
+			//root_ = ptr;
         }
     }
     bool find(int value) const {
