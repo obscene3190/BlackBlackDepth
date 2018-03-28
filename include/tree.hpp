@@ -16,7 +16,7 @@ public:
         return root_;
     }
     tree_t() {
-        root_->value = nullptr;
+        root_ = nullptr;
     }
 
     void insert(int value) {
@@ -30,8 +30,9 @@ public:
             node_t * ptr = root_;
             while (root_ != nullptr) {
                 if (value < root_->value) {
-                    if(root_->left->value == nullptr) {
+                    if(root_->left->value == 0) {
                         root_->left->value = value;
+                        
                         return;
                     }
                     else {
@@ -39,7 +40,7 @@ public:
                     }
                 }
                 else if (value >= root_->value) {
-                    if(root_->right->value == nullptr) {
+                    if(root_->right->value == 0) {
                         root_->right->value = value;
                         return;
                     }
