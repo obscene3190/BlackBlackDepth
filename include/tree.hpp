@@ -77,9 +77,23 @@ public:
 	}
         return false;
     }
-    void print(std::ostream & stream) const {
-
-    }
+    void print(std::ostream & stream ,  node_t * node , size_t i = 1) const
+	{
+		if (node->right) {
+			i++;
+			print(stream ,node->right, i);
+			i--;
+		}
+		for (size_t k = 0; k < i; k++) {
+			stream << "--";
+		}
+			stream << node->value << std::endl;
+		if (node->left) {
+			i++;
+			print(stream ,node->left, i);
+			i--;
+		}
+	}
 };
 
 int main() {
