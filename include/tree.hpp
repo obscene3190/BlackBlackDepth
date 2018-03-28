@@ -77,21 +77,20 @@ public:
 	}
         return false;
     }
-    void print(std::ostream & stream ,  node_t * node , size_t i = 1) const
-	{
-		if (node->right) {
-			i++;
-			print(stream ,node->right, i);
-			i--;
-		}
-		for (size_t k = 0; k < i; k++) {
-			stream << "--";
-		}
-			stream << node->value << std::endl;
-		if (node->left) {
-			i++;
-			print(stream ,node->left, i);
-			i--;
+    void print(std::ostream & stream ,  node_t * ptr, size_t i) const {
+	if (ptr->right != nullptr) {
+		i++;
+		print(stream ,ptr->right, i);
+		i--;
+	}
+	for (size_t k = 0; k < i; k++) {
+		stream << "--";
+	}
+	stream << ptr->value << std::endl;
+	 if (ptr->left != nullptr) {
+		i++;
+		print(stream ,ptr->left, i);
+		i--;
 		}
 	}
 };
