@@ -31,6 +31,7 @@ public:
 			while (ptr != nullptr) {
 				if (value < ptr->value) {
 					if (ptr->left == nullptr) {
+						ptr->left = new node_t;
 						ptr = ptr->left;
 						ptr->value = value;
 						ptr->left = nullptr;
@@ -43,6 +44,7 @@ public:
 				}
 				else if (value >= ptr->value) {
 					if (ptr->right == nullptr) {
+						ptr->right = new node_t;
 						ptr = ptr->right;
 						ptr->value = value;
 						ptr->left = nullptr;
@@ -58,33 +60,22 @@ public:
         }
     }
     bool find(int value) const {
-        bool res = false;
         if (root_ == nullptr) {
             return false;
         }
-        if (root_->value == value) {
-            return true;
-        }
         node_t *ptr = root_;
         while (ptr != nullptr) {
-            if (value < root_->value) {
-                if (root_->left->value == value) {
-                    return true;
-                } else {
-                    ptr = ptr->left;
-                }
+            if (ptr->value == value) {
+            	return true;
             }
-            else if (value > root_->value) {
-                    if (root_->right->value == value) {
-                        return true;
-                    } 
-                    else 
-                    {
-                        ptr = ptr->right;
-                    }
-                }
-            }
-        return res;
+	    else if ( value > ptr->value) {
+		ptr = ptr->right;
+	    }
+	    else if ( value < ptr->value) {
+		ptr = ptr->left;
+	    }
+	}
+        return false;
     }
     void print(std::ostream & stream) const {
 
