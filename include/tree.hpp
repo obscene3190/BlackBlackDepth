@@ -80,8 +80,7 @@ public:
 	}
         return false;
     }
-    void print(std::ostream & stream ,  node_t * ptr) const {
-	size_t i;
+    void print(std::ostream & stream ,  node_t * ptr, size_t i = 1) const {
 	if (ptr) {
 		if (ptr->right != nullptr) {
 			i++;
