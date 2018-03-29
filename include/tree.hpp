@@ -119,27 +119,24 @@ public:
      }		
 };
 
-bool read(tree_t & tree) {
+bool read(tree_t & tree, std::istream & stream) {
     char op;
     int value;
-    std::string string;
-	getline(std::cin, string);
-	std::istringstream stream(string);
-	if( stream >> op && ( op == '=' || op == '+' || op == '?' || op == 'q')) {
+    if( stream >> op && ( op == '=' || op == '+' || op == '?' || op == 'q')) {
 	    if (op == 'q') {
 	        return false;
     	}
-        else if (op == '=') {
-	        tree.print(std::cout, tree.root(), 1);
+    	else if (op == '=') {
+	    tree.print(std::cout, tree.root(), 1);
 	    }
-	    else if ((op == '+' || op == '?') && stream >> value) {
-		    if (op == '+') {
-			    tree.insert(value);
-	    	}
-		    else if (op == '?') {
-		    	std::cout << tree.find(value) << std::endl;
-	    	}
+    	else if ((op == '+' || op == '?') && stream >> value) {
+	    if (op == '+') {
+		tree.insert(value);
 	    }
-	}
-	return true;
+	else if (op == '?') {
+		std::cout << tree.find(value) << std::endl;
+	     }
+    	}
+     }
+     return true;
 }
