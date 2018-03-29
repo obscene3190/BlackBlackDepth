@@ -80,23 +80,24 @@ public:
 	}
         return false;
     }
-    void print(std::ostream & stream ,  node_t * ptr, size_t i) const {
+    void print(std::ostream & stream ,  node_t * ptr) const {
+	size_t i;
 	if (ptr) {
 		if (ptr->right != nullptr) {
-		i++;
-		print(stream ,ptr->right, i);
-		i--;
-	}
-	for (size_t k = 0; k < i; k++) {
-		stream << "--";
-	}
-	stream << ptr->value << std::endl;
-	 if (ptr->left != nullptr) {
-		i++;
-		print(stream ,ptr->left, i);
-		i--;
+			i++;
+			print(stream ,ptr->right, i);
+			i--;
 		}
-	}
+		for (size_t k = 0; k < i; k++) {
+			stream << "--";
+		}
+		stream << ptr->value << std::endl;
+	 	if (ptr->left != nullptr) {
+			i++;
+			print(stream ,ptr->left, i);
+			i--;
+			}
+		}
     }
     node_t * root() const {
         return root_;
