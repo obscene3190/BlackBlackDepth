@@ -21,9 +21,9 @@ TEST_CASE("adding tree")
 	std::istringstream istream1{ input1 };
 	std::istringstream istream2{ input2 };
 	std::istringstream istream3{ input3 };
-	REQUIRE(read(tree, istream1))
-	REQUIRE(read(tree, istream2))
-	REQUIRE(read(tree, istream3))
+	REQUIRE(read(tree, istream1));
+	REQUIRE(read(tree, istream2));
+	REQUIRE(read(tree, istream3));
 	REQUIRE( result == tree.print(std::cout, tree.root(), 1); );
 } 
 /*
