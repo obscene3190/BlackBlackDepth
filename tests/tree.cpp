@@ -12,12 +12,12 @@ TEST_CASE("creating tree")
 TEST_CASE("adding tree")
 {
 	tree_t tree;
-	std::string input1{"+2/n"};
-	std::string input2{"+1/n"};
-	std::string input3{"+3/n"};
-	std::string result{"----3/n"
-			   "--2/n"
-			   "----1/n"
+	std::string input1{"+2\n"};
+	std::string input2{"+1\n"};
+	std::string input3{"+3\n"};
+	std::string result{"----3\n"
+			   "--2\n"
+			   "----1\n"
 	};
 	
 	std::istringstream istream1{ input1 };
