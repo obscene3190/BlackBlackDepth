@@ -24,7 +24,8 @@ TEST_CASE("adding tree")
 	REQUIRE(read(tree, istream1));
 	REQUIRE(read(tree, istream2));
 	REQUIRE(read(tree, istream3));
-	REQUIRE( result == tree.print(std::cout, tree.root(), 1); );
+	//std::istringstream resultadd{ tree.print(std::cout, tree.root(), 1) };
+	REQUIRE( result == tree.print(std::cout, tree.root(), 1) );
 } 
 /*
 
