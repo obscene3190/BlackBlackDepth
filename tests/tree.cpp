@@ -9,7 +9,7 @@ TEST_CASE("creating tree")
 	REQUIRE( tree.root() == nullptr );
 }
 
-TEST_CASE("adding tree")
+TEST_CASE("adding + printing tree")
 {
 	tree_t tree;
 	std::string input1{"+2\n"};
@@ -30,16 +30,19 @@ TEST_CASE("adding tree")
 	tree.print(ostream, tree.root());
 	REQUIRE( ostream.str() == result );
 } 
-/*
-
-TEST_CASE("printing tree")
-{
-	tree_t tree;
-	REQUIRE(  );
-}
 
 TEST_CASE("finding tree")
 {
 	tree_t tree;
-	REQUIRE(  );
-}*/
+	std::string input1{"+2\n"};
+	std::string input2{"+1\n"};
+	std::string input3{"+3\n"};
+	std::istringstream istream1{ input1 };
+	std::istringstream istream2{ input2 };
+	std::istringstream istream3{ input3 };
+	REQUIRE(read(tree, istream1));
+	REQUIRE(read(tree, istream2));
+	REQUIRE(read(tree, istream3));
+	REQUIRE(tree.find(3) == true );
+	REQUIRE(tree.find(5) == false );
+}
