@@ -5,13 +5,13 @@
 
 TEST_CASE("creating tree")
 {
-	tree_t tree;
+	tree_t<int> tree;
 	REQUIRE( tree.root() == nullptr );
 }
 
 TEST_CASE("adding + printing tree")
 {
-	tree_t tree;
+	tree_t<int> tree;
 	std::string input1{"+2\n"};
 	std::string input2{"+1\n"};
 	std::string input3{"+3\n"};
@@ -33,7 +33,7 @@ TEST_CASE("adding + printing tree")
 
 TEST_CASE("finding tree")
 {
-	tree_t tree;
+	tree_t<int> tree;
 	std::string input1{"+2\n"};
 	std::string input2{"+1\n"};
 	std::string input3{"+3\n"};
