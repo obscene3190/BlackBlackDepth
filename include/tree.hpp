@@ -108,6 +108,45 @@ public:
 			}
 		}
     }
+    node_t * deletenode(node_t * root_, T val){
+        if(root_ == nullptr)
+            return root_;
+
+        if(val == root_->value){
+
+            node_t* tmp;
+            if(root_->right == nullptr)
+                tmp = root_->left;
+            else {
+                node_t* ptr = root_->right;
+                if(ptr->left == nullptr){
+                    ptr->left = root_->left;
+                    tmp = ptr;
+                } 
+                else {
+
+                    node_t * pmin = ptr->left;
+                    while(pmin->left != nullptr){
+                        ptr  = pmin;
+                        pmin = ptr->left;
+                        }
+                    ptr->left   = pmin->right;
+                    pmin->left  = root_->left;
+                    pmin->right = root_->right;
+                    tmp = pmin;
+                }
+            }
+
+            delete root_;
+            return tmp;
+        } else if(val < root_->value) {
+            root_->left = deletenode(root_->left, val);
+            }
+        else {
+            root_->right = deletenode(root_->right, val);
+            }
+        return root_;
+    }
     
     node_t * root() const {
         return root_;
