@@ -46,3 +46,17 @@ TEST_CASE("finding tree")
 	REQUIRE(tree.find(3) == true );
 	REQUIRE(tree.find(5) == false );
 }
+
+TEST_CASE("fequaling tree")
+{
+    	tree_t<int> tree1, tree2;
+    	tree1.insert(5);
+    	tree1.insert(3);
+    	tree1.insert(7);
+    	tree2.insert(5);
+    	tree2.insert(3);
+    	tree2.insert(6);
+	REQUIRE(tree1 == tree2);
+	tree2.insert(7);
+	REQUIRE(tree1 != tree2);
+}
