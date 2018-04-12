@@ -147,7 +147,3 @@ bool read(tree_t<T> & tree, std::istream & stream) {
      }
      return true;
 }
-
-int main() {
-
-}
