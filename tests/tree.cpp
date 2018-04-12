@@ -56,7 +56,7 @@ TEST_CASE("fequaling tree")
     	tree2.insert(5);
     	tree2.insert(3);
     	tree2.insert(6);
-	REQUIRE(tree1 == tree2);
+	REQUIRE((tree1==tree2) == true);
 	tree2.insert(7);
-	REQUIRE((tree1 == tree2) == false);
+	REQUIRE((tree1==tree2) == false);
 }
