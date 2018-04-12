@@ -9,6 +9,17 @@ TEST_CASE("creating tree")
 	REQUIRE( tree.root() == nullptr );
 }
 
+TEST_CASE("creating tree with inicialization")
+{
+	tree_t<int> tree({2, 1, 3});
+	std::string result{"----3\n"
+			   "--2\n"
+			   "----1\n"
+	};
+	std::ostringstream ostream;
+	tree.print(ostream, tree.root());
+	REQUIRE( ostream.str() == result );
+
 TEST_CASE("adding + printing tree")
 {
 	tree_t<int> tree;
