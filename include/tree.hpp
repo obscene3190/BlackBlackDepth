@@ -135,16 +135,7 @@ public:
         node_t * a, * b;
         a = root_;
         b = other.root();
-        if (a==nullptr && b==nullptr) return(true);
-        else if (a!=nullptr && b!=nullptr)
-        {
-            return(
-                    a->value == b->value &&
-                    equals(a->left, b->left) &&
-                    equals(a->right, b->right)
-            );
-        }
-        else return(false);
+        return(equals(a, b));
     }
     ~tree_t () {
 	if( root_ != nullptr) {
