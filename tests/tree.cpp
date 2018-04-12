@@ -86,7 +86,7 @@ TEST_CASE("deleting")
     	tree.deleteelement(tree.root(), 8);
 	std::ostringstream ostream1;
 	tree.print(ostream1, tree.root());
-	REQUIRE( ostream.str() == result8 );
+	REQUIRE( ostream1.str() == result8 );
 	
 	std::string result5{"----9\n"
 			    "--7\n"
@@ -97,7 +97,7 @@ TEST_CASE("deleting")
 	tree.deleteelement(tree.root(), 5);
 	std::ostringstream ostream2;
 	tree.print(ostream2, tree.root());
-	REQUIRE( ostream.str() == result5 );
+	REQUIRE( ostream2.str() == result5 );
 	
 	std::string result3{"----9\n"
 			    "--7\n"
@@ -107,5 +107,5 @@ TEST_CASE("deleting")
         tree.deleteelement(tree.root(), 3);
 	std::ostringstream ostream3;
 	tree.print(ostream3, tree.root());
-	REQUIRE( ostream.str() == result3 );
+	REQUIRE( ostream3.str() == result3 );
 }
