@@ -18,7 +18,6 @@ public:
         root_ = nullptr;
     }
 
-    template <typename T>
     void insert(T value) {
         if (root_ == nullptr) {
             root_ = new node_t;
@@ -65,7 +64,6 @@ public:
         }
     }
 
-    template <typename T>
     bool find(T value) const {
         if (root_ == nullptr) {
             return false;
