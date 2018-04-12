@@ -2,22 +2,24 @@
 #include <sstream>
 #include <string>
 
-class tree_t
+template <typename T> class tree_t
 {
 private:
     struct node_t {
         node_t * left;
         node_t * right;
-        int value;
+        T value;
     };
 private:
     node_t * root_;
 public:
+    
     tree_t() {
         root_ = nullptr;
     }
 
-    void insert(int value) {
+    template <typename T>
+    void insert(T value) {
         if (root_ == nullptr) {
             root_ = new node_t;
             root_->value = value;
@@ -62,7 +64,9 @@ public:
 			}
         }
     }
-    bool find(int value) const {
+
+    template <typename T>
+    bool find(T value) const {
         if (root_ == nullptr) {
             return false;
         }
@@ -80,6 +84,7 @@ public:
 	}
         return false;
     }
+    
     void print(std::ostream & stream ,  node_t * ptr, size_t i = 1) const {
 	if (ptr) {
 		if (ptr->right != nullptr) {
@@ -98,9 +103,11 @@ public:
 			}
 		}
     }
+    
     node_t * root() const {
         return root_;
     }
+    
     void delete1(node_t * ptr) {
         if (ptr != nullptr) {
 		if (ptr->right) {
@@ -112,16 +119,18 @@ public:
 		delete ptr;
 		}
 	}
+	
     ~tree_t () {
 	if( root_ != nullptr) {
 		delete1(root_);
 	}
-     }		
+     }
 };
 
-bool read(tree_t & tree, std::istream & stream) {
+template <typename T>
+bool read(tree_t<T> & tree, std::istream & stream) {
     char op;
-    int value;
+    T value;
     if( stream >> op && ( op == '=' || op == '+' || op == '?' || op == 'q')) {
 	    if (op == 'q') {
 	        return false;
@@ -139,4 +148,8 @@ bool read(tree_t & tree, std::istream & stream) {
     	}
      }
      return true;
+}
+
+int main() {
+
 }
