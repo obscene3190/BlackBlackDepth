@@ -73,7 +73,7 @@ TEST_CASE("fequaling tree")
 	REQUIRE((tree1==tree2) == false);
 }
 
-TEST_CASE("fequaling tree")
+TEST_CASE("deleting")
 {
     	tree_t<int> tree{7, 3, 8, 2, 5, 4, 9};
 	std::string result8{"----9\n"
