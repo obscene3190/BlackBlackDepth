@@ -72,3 +72,40 @@ TEST_CASE("fequaling tree")
 	tree2.insert(7);
 	REQUIRE((tree1==tree2) == false);
 }
+
+TEST_CASE("fequaling tree")
+{
+    	tree_t<int> tree{7, 3, 8, 2, 5, 4, 9};
+	std::string result8{"----9\n"
+			    "--7\n"
+			    "------5\n"
+			    "--------4\n"
+			    "----3\n"
+			    "------2\n"
+        };
+    	tree.deleteelement(tree.root(), 8);
+	std::ostringstream ostream1;
+	tree.print(ostream1, tree.root());
+	REQUIRE( ostream.str() == result8 );
+	
+	std::string result5{"----9\n"
+			    "--7\n"
+			    "------4\n"
+			    "----3\n"
+			    "------2\n"
+        };
+	tree.deleteelement(tree.root(), 5);
+	std::ostringstream ostream2;
+	tree.print(ostream2, tree.root());
+	REQUIRE( ostream.str() == result5 );
+	
+	std::string result3{"----9\n"
+			    "--7\n"
+			    "----4\n"
+			    "------2\n"
+        };
+        tree.deleteelement(tree.root(), 3);
+	std::ostringstream ostream3;
+	tree.print(ostream3, tree.root());
+	REQUIRE( ostream.str() == result3 );
+}
