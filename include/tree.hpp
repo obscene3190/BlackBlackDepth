@@ -17,6 +17,14 @@ public:
     tree_t() {
         root_ = nullptr;
     }
+    tree_t(std::initializer_list<T> keys) {
+	while ( keys.begin() != keys.end() ) { /*Begin dозвращает указатель на первый элемент в initializer_list.
+	End возвращает указатель на позицию, следующую за последним элементом в initializer_list. */
+		insert ( *(keys.begin() ) );
+		keys.begin()++;
+	}
+	insert ( *(keys.end() ) );
+}
 
     void insert(T value) {
         if (root_ == nullptr) {
