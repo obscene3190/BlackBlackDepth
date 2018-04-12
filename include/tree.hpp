@@ -18,7 +18,7 @@ public:
         root_ = nullptr;
     }
     tree_t(std::initializer_list<T> keys) {
-	for(auto& val : keys)
+	for(T val : keys)
         {
             insert (val);
         }
