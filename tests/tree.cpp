@@ -11,7 +11,7 @@ TEST_CASE("creating tree")
 
 TEST_CASE("creating tree with inicialization")
 {
-	tree_t<int> tree({2, 1, 3});
+	tree_t<int> tree{2, 1, 3};
 	std::string result{"----3\n"
 			   "--2\n"
 			   "----1\n"
