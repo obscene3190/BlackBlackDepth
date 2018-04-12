@@ -19,6 +19,7 @@ TEST_CASE("creating tree with inicialization")
 	std::ostringstream ostream;
 	tree.print(ostream, tree.root());
 	REQUIRE( ostream.str() == result );
+}
 
 TEST_CASE("adding + printing tree")
 {
