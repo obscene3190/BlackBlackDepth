@@ -108,44 +108,55 @@ public:
 			}
 		}
     }
-    node_t * deletenode(node_t * root_, T val){
-        if(root_ == nullptr)
-            return root_;
-
-        if(val == root_->value){
-
-            node_t* tmp;
-            if(root_->right == nullptr)
-                tmp = root_->left;
-            else {
-                node_t* ptr = root_->right;
-                if(ptr->left == nullptr){
-                    ptr->left = root_->left;
-                    tmp = ptr;
-                } 
-                else {
-
-                    node_t * pmin = ptr->left;
-                    while(pmin->left != nullptr){
-                        ptr  = pmin;
-                        pmin = ptr->left;
-                        }
-                    ptr->left   = pmin->right;
-                    pmin->left  = root_->left;
-                    pmin->right = root_->right;
-                    tmp = pmin;
+     bool deletenode(T value)
+    {
+        node_t ** newroot, *temp;
+        newroot = &root_; // новый корень дерева после удаления
+        temp = root_; // наш удаляемый узел
+        //поиск удаляемого элемента, это будет узел temp
+        for (;;)
+        {
+            if (root_ == nullptr) {
+                return false;
+            }
+            while (temp != nullptr) {
+                if (temp->value == value) {
+                    break;
+                }
+                else if ( value > temp->value) {
+                    temp = temp->right;
+                }
+                else if ( value < temp->value) {
+                    temp = temp->left;
                 }
             }
 
-            delete root_;
-            return tmp;
-        } else if(val < root_->value) {
-            root_->left = deletenode(root_->left, val);
+            break;
+        }
+        // при удалении на место элемента становится элемент, который определяется условием, что все элементы справа больше и слева меньше, таким образом это будети наменьший элемент в правой ветке удаляемого узла, рассматривается 3 случая:
+        if (temp->right == nullptr) {
+            *newroot = temp->left; // 1. если у нас только левая ветка, то при удалении элемента новым корнем дерева становится следующий левый реьенок       }
+        }
+        else{ //если дерево изначально разделяется на 2 ветки,то:
+            node_t * right = temp->right; //начинаем ходить по правой стороне
+            if (right->left == nullptr){
+                right->left = temp->left; //если у первого правого ребенка нет левых детей, то вся левая ветка изначального корня становится левой веткой правого ребенка изначального корня
+                *newroot = right; // указываем на новый корень дерева
             }
-        else {
-            root_->right = deletenode(root_->right, val);
+            else{ //если у правого ребенка оказались левые дети:
+                node_t * rightleft = right->left; // продолжаем ходить по правой стороне
+                while (rightleft->left != nullptr){ //смещаем указатели по левым детям до тех, пор пока не закончится дерево
+                    right = rightleft;
+                    rightleft = right->left;
+                } //таким образом мы нашли наименьший элемент в правой ветке и можем поставить его на место удаляемого
+                right->left = rightleft->right; //все элементы, больше найденного, становятся его правой веткой
+                rightleft->left = temp->left; //все элементы, меньше удаляемого, автоматически меньше найденного и становятся его левой веткой
+                rightleft->right = temp->right; // добавялем в правую ветку перед ранее добвленными все, что были справа на ветках выше
+                *newroot = rightleft; // указываем на новый корень
             }
-        return root_;
+        }
+        delete temp; // удаляем наш узел
+        return true;
     }
     
     node_t * root() const {
