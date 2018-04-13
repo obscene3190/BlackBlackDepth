@@ -24,7 +24,9 @@ public:
             insert (val);
         }
 }
-
+    bool isEmpty() {
+		return (!root_);
+    }
     void insert(T value) {
         if (root_ == nullptr) {
             root_ = new node_t;
