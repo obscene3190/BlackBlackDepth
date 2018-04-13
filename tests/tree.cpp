@@ -77,7 +77,7 @@ TEST_CASE("delete non inserted element")
 {
     	tree_t<int> tree1{8};
 	tree_t<int> tree2{8};
-	REQUIRE(  !tree.remove(4) );
+	REQUIRE(  !tree.deletenode(4) );
 	REQUIRE( tree1 == tree2 );
 }
 
@@ -85,7 +85,7 @@ TEST_CASE("delete root")
 {
     	tree_t<int> tree1{8};
 	tree_t<int> tree2;
-	REQUIRE(  tree.remove(8) );
+	REQUIRE(  tree.deletenode(8) );
 	REQUIRE( tree1 == tree2 );
 }
 
@@ -93,7 +93,7 @@ TEST_CASE("delete root with one child")
 {
     	tree_t<int> tree1{8, 4, 3};
 	tree_t<int> tree2{4, 3};
-	REQUIRE(  tree.remove(8) );
+	REQUIRE(  tree.deletenode(8) );
 	REQUIRE( tree1 == tree2 );
 }
 
@@ -101,7 +101,7 @@ TEST_CASE("delete root with children")
 {
     	tree_t<int> tree1{8, 4, 3, 10, 9, 13, 11, 12};
 	tree_t<int> tree2{9, 4, 3, 10, 13, 11, 12};
-	REQUIRE(  tree.remove(8) );
+	REQUIRE(  tree.deletenode(8) );
 	REQUIRE( tree1 == tree2 );
 }
 
@@ -109,7 +109,7 @@ TEST_CASE("delete non root without children")
 {
     	tree_t<int> tree1{8, 4, 3, 10, 9, 13, 11, 12};
 	tree_t<int> tree2{8, 4, 10, 9, 13, 11, 12};
-	REQUIRE(  tree.remove(3) );
+	REQUIRE(  tree.deletenode(3) );
 	REQUIRE( tree1 == tree2 );
 }
 
@@ -117,7 +117,7 @@ TEST_CASE("delete non root with one child")
 {
     	tree_t<int> tree1{8, 4, 3, 10, 9, 13, 11, 12};
 	tree_t<int> tree2{8, 4, 3, 10, 9, 13, 12};
-	REQUIRE(  tree.remove(11) );
+	REQUIRE(  tree.deletenode(11) );
 	REQUIRE( tree1 == tree2 );
 }
 
@@ -125,7 +125,7 @@ TEST_CASE("delete non root with children")
 {
     	tree_t<int> tree1{8, 4, 3, 10, 9, 13, 11, 12};
 	tree_t<int> tree2{8, 4, 3, 11, 9, 13, 12};
-	REQUIRE(  tree.remove(10) );
+	REQUIRE(  tree.deletenode(10) );
 	REQUIRE( tree1 == tree2 );
 }
 
