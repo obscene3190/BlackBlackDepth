@@ -59,7 +59,7 @@ TEST_CASE("finding tree")
 	REQUIRE(tree.find(5) == false );
 }
 
-TEST_CASE("fequaling tree")
+TEST_CASE("equaling tree")
 {
     	tree_t<int> tree1, tree2;
     	tree1.insert(5);
@@ -73,39 +73,42 @@ TEST_CASE("fequaling tree")
 	REQUIRE((tree1==tree2) == false);
 }
 
-TEST_CASE("deleting")
+TEST_CASE("delete non inserted element")
 {
-    	tree_t<int> tree{7, 3, 8, 2, 5, 4, 9};
-	std::string result8{"----9\n"
-			    "--7\n"
-			    "------5\n"
-			    "--------4\n"
-			    "----3\n"
-			    "------2\n"
-        };
-    	tree.deletenode(tree.root(), 8);
-	std::ostringstream ostream1;
-	tree.print(ostream1, tree.root());
-	REQUIRE( ostream1.str() == result8 );
-	
-	std::string result5{"----9\n"
-			    "--7\n"
-			    "------4\n"
-			    "----3\n"
-			    "------2\n"
-        };
-	tree.deletenode(tree.root(), 5);
-	std::ostringstream ostream2;
-	tree.print(ostream2, tree.root());
-	REQUIRE( ostream2.str() == result5 );
-	
-	std::string result3{"----9\n"
-			    "--7\n"
-			    "----4\n"
-			    "------2\n"
-        };
-        tree.deletenode(tree.root(), 3);
-	std::ostringstream ostream3;
-	tree.print(ostream3, tree.root());
-	REQUIRE( ostream3.str() == result3 );
+    	tree_t<int> tree1{8};
+	tree_t<int> tree2{8};
+	REQUIRE(  !tree.remove(4) );
+	REQUIRE( tree1 == tree2 );
+}
+
+TEST_CASE("delete root")
+{
+    	tree_t<int> tree1{8};
+	tree_t<int> tree2;
+	REQUIRE(  tree.remove(8) );
+	REQUIRE( tree1 == tree2 );
+}
+
+TEST_CASE("delete root with one child")
+{
+    	tree_t<int> tree1{8, 4, 3};
+	tree_t<int> tree2{4, 3};
+	REQUIRE(  tree.remove(8) );
+	REQUIRE( tree1 == tree2 );
+}
+
+TEST_CASE("delete root with children")
+{
+    	tree_t<int> tree1{8, 4, 3, 10, 9, 13, 11, 12};
+	tree_t<int> tree2{9, 4, 3, 10, 13, 11, 12};
+	REQUIRE(  tree.remove(8) );
+	REQUIRE( tree1 == tree2 );
+}
+
+TEST_CASE("delete non root with children")
+{
+    	tree_t<int> tree1{8, 4, 3, 10, 9, 13, 11, 12};
+	tree_t<int> tree2{8, 4, 10, 9, 13, 11, 12};
+	REQUIRE(  !tree.remove(3) );
+	REQUIRE( tree1 == tree2 );
 }
