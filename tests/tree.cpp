@@ -136,7 +136,7 @@ SCENARIO("BST delete root with children", "[delete]") {
     tree_t<int>  tree{8, 4, 3, 10, 9, 13, 11, 12};
     tree_t<int> tree1({9, 4, 3, 10, 13, 11, 12});
     REQUIRE( tree.deletenode(8) );
-    REQUIRE( tree==tree1 );
+    REQUIRE( (tree==tree1) );
 }
 //                +----+                                              +----+
 //                | 08 |                                              | 08 |
@@ -165,7 +165,7 @@ SCENARIO("BST delete non root without children", "[delete]") {
     tree_t<int>  tree{8, 4, 3, 10, 9, 13, 11, 12};
     tree_t<int> tree1({8, 4, 10, 9, 13, 11, 12});
     REQUIRE( tree.deletenode(3) );
-    REQUIRE( tree==tree1 );
+    REQUIRE( (tree==tree1) );
 }
 //                +----+                                              +----+
 //                | 08 |                                              | 08 |
@@ -194,7 +194,7 @@ SCENARIO("BST delete non root with one child", "[delete]") {
     tree_t<int>  tree{8, 4, 3, 10, 9, 13, 11, 12};
     tree_t<int> tree1({8, 4, 3, 10, 9, 13, 12});
     REQUIRE( tree.deletenode(11) );
-    REQUIRE( tree==tree1);
+    REQUIRE( (tree==tree1));
 }
 //                +----+                                              +----+
 //                | 08 |                                              | 08 |
@@ -223,5 +223,5 @@ SCENARIO("BST delete non root with children", "[delete]") {
     tree_t<int>  tree{8, 4, 3, 10, 9, 13, 11, 12};
     tree_t<int> tree1({8, 4, 3, 11, 9, 13, 12});
     REQUIRE( tree.deletenode(10) );
-    REQUIRE( tree==tree1 );
+    REQUIRE( (tree==tree1) );
 }
