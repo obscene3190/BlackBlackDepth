@@ -118,22 +118,20 @@ public:
         //поиск удаляемого элемента, это будет узел temp
         for (;;)
         {
-            if (root_ == nullptr) {
+            if (temp == nullptr){
                 return false;
             }
-            while (temp != nullptr) {
-                if (temp->value == value) {
-                    break;
-                }
-                else if ( value > temp->value) {
-                    temp = temp->right;
-                }
-                else if ( value < temp->value) {
-                    temp = temp->left;
-                }
+            else if (value == temp->value){
+                break;
             }
-	    if(temp == nullptr) return false;
-            break;
+            else if (value > temp->value){
+                newroot = &temp->right;
+                temp = temp->right;
+            }
+            else{
+                newroot = &temp->left;
+                temp = temp->left;
+            }
         }
         // при удалении на место элемента становится элемент, который определяется условием, что все элементы справа больше и слева меньше, таким образом это будети наменьший элемент в правой ветке удаляемого узла, рассматривается 3 случая:
         if (temp->right == nullptr) {
