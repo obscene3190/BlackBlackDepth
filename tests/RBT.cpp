@@ -9,23 +9,16 @@ TEST_CASE("creating tree")
 	REQUIRE( tree.root() == nullptr );
 }
 
-TEST_CASE("adding + printing tree")
+TEST_CASE("simple adding + printing tree")
 {
-	tree_t<int> tree;
-	std::string input1{"+2\n"};
-	std::string input2{"+1\n"};
-	std::string input3{"+3\n"};
+	RBT<int> tree;
 	std::string result{"----3\n"
 			   "--2\n"
 			   "----1\n"
 	};
-	
-	std::istringstream istream1{ input1 };
-	std::istringstream istream2{ input2 };
-	std::istringstream istream3{ input3 };
-	REQUIRE(read(tree, istream1));
-	REQUIRE(read(tree, istream2));
-	REQUIRE(read(tree, istream3));
+	tree.insert(2);
+	tree.insert(3);
+	tree.insert(1);
 	std::ostringstream ostream;
 	tree.print(ostream, tree.root());
 	REQUIRE( ostream.str() == result );
@@ -33,18 +26,27 @@ TEST_CASE("adding + printing tree")
 
 TEST_CASE("finding tree")
 {
-	tree_t<int> tree;
-	std::string input1{"+2\n"};
-	std::string input2{"+1\n"};
-	std::string input3{"+3\n"};
-	std::istringstream istream1{ input1 };
-	std::istringstream istream2{ input2 };
-	std::istringstream istream3{ input3 };
-	REQUIRE(read(tree, istream1));
-	REQUIRE(read(tree, istream2));
-	REQUIRE(read(tree, istream3));
+	RBT<int> tree;
+	tree.insert(2);
+	tree.insert(3);
+	tree.insert(1);
 	REQUIRE(tree.find(3) == true );
 	REQUIRE(tree.find(5) == false );
 }
 
-
+TEST_CASE("adding with simple balancing")
+{
+	RBT<int> tree;
+	std::string result{"------5\n"
+			   "----4\n"
+			   "--3\n"
+			   "----2\n"
+	};
+	tree.insert(2);
+	tree.insert(3);
+	tree.insert(4);
+	tree.insert(5);
+	std::ostringstream ostream;
+	tree.print(ostream, tree.root());
+	REQUIRE( ostream.str() == result );
+} 
