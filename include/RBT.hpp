@@ -219,18 +219,6 @@ public:
 			delete ptr;
 		}
 	}
-		bool equals(node_t * a, node_t *b) const {
-        	if (a==nullptr && b==nullptr) return(true);
-        	else if (a!=nullptr && b!=nullptr)
-        	{
-            		return(
-                    		a->value == b->value &&
-                   		equals(a->left, b->left) &&
-                    		equals(a->right, b->right)
-            		);
-        }
-        	else return(false);
-    }
 
     ~RBT () {
 	if( root_ != nullptr) {
