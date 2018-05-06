@@ -23,39 +23,44 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
     RBT<int> tree;
     std::ostringstream ostream;
     REQUIRE( tree.root() == nullptr );
-    tree.print(ostream, tree.root())
+    tree.print(ostream, tree.root());
     REQUIRE( ostream.str() == "" );
     tree.insert( 10 );
-    tree.print(ostream, tree.root())
+    tree.print(ostream, tree.root());
     REQUIRE( ostream.str() == "--b10\n" );
     tree.insert( 85 );
-    tree.print(ostream, tree.root())
+    tree.print(ostream, tree.root());
     REQUIRE( ostream.str() ==	 "----r85\n"
 	    			 "--b10\n" );
     tree.insert( 15 );
-    REQUIRE( tree.print(cout, tree.root()) == "----r85\n"
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() ==	  "----r85\n"
 	    					 "--b15\n"
 	   					 "----r10\n");
     tree.insert( 70 );
-    REQUIRE( tree.print(cout, tree.root()) == "----b85\n"
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() ==	 		 "----b85\n"
 						 "------r70\n"
 						 "--b15\n"
 						 "----b10\n" );
     tree.insert( 20 );
-    REQUIRE( tree.print(cout, tree.root()) == 	"------r85\n"
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() ==	 		  	"------r85\n"
 							"----b70\n"
 							"------r20\n"
 							"--b15\n"
 							"----b10\n" );
     tree.insert( 60 );
-    REQUIRE( tree.print(cout, tree.root()) == 	"------b85\n"
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() ==	 		  	"------b85\n"
 							"----r70\n"
 							"--------r60\n"
 							"------b20\n"
 							"--b15\n"
 							"----b10\n" );
     tree.insert( 30 );
-    REQUIRE( tree.print(cout, tree.root()) == 	"------b85\n"
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() ==	 		  	"------b85\n"
 							"----r70\n"
 							"--------r60\n"
 							"------b30\n"
@@ -63,7 +68,8 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"--b15\n"
 							"----b10\n" );
     tree.insert( 50 );
-    REQUIRE( tree.print(cout, tree.root()) == 	"------b85\n"
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() ==	 		  	"------b85\n"
 							"----r70\n"
 							"------b60\n"
 							"--------r50\n"
@@ -72,7 +78,8 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----r15\n"
 							"------b10\n" );
     tree.insert( 65 );
-    REQUIRE( tree.print(cout, tree.root()) == 	"------b85\n"
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() ==	 		  	"------b85\n"
 							"----r70\n"
 							"--------r65\n"
 							"------b60\n"
@@ -82,7 +89,8 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----r15\n"
 							"------b10\n" );
     tree.insert( 80 );
-    REQUIRE( tree.print(cout, tree.root()) == 	"------b85\n"
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() ==	 		  	"------b85\n"
 							"--------r80\n"
 							"----r70\n"
 							"--------r65\n"
@@ -93,7 +101,8 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----r15\n"
 							"------b10\n" );
     tree.insert( 90 );
-    REQUIRE( tree.print(cout, tree.root()) == 	"--------r90\n"
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() ==	 		  	"--------r90\n"
 							"------b85\n"
 							"--------r80\n"
 							"----r70\n"
@@ -105,7 +114,8 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----r15\n"
 							"------b10\n" );
     tree.insert( 40 );
-    REQUIRE( tree.print(cout, tree.root()) == 	"--------r90\n"
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() ==	 		  	"--------r90\n"
 							"------b85\n"
 							"--------r80\n"
 							"----b70\n"
@@ -118,7 +128,8 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----b15\n"
 							"------b10\n" );
     tree.insert( 5 );
-    REQUIRE( tree.print(cout, tree.root()) == 	"--------r90\n"
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() ==	 		  	"--------r90\n"
 							"------b85\n"
 							"--------r80\n"
 							"----b70\n"
@@ -132,7 +143,8 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"------b10\n"
 							"--------r5\n" );
     tree.insert( 55 );
-    REQUIRE( tree.print(cout, tree.root()) == 	"--------r90\n"
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() ==	 		  	"--------r90\n"
 							"------b85\n"
 							"--------r80\n"
 							"----b70\n"
