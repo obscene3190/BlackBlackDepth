@@ -183,8 +183,9 @@ TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
     REQUIRE( ostream.str() == "--b10\n" );
     //REQUIRE( tree.size() == 1 );
     tree.remove( 10 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() == "" );
+	std::ostringstream ostream1;
+    tree.print(ostream1, tree.root());
+    REQUIRE( ostream1.str() == "" );
     REQUIRE( tree.root() == nullptr );
     {
         RBT<int> tree;
