@@ -131,7 +131,159 @@ public:
 		setColor(root_, BLACK); //корень всегда должен быть черным
 	}
 
+	//Вспомогательный метод поиска места и удаления узла, вызываемый рекурсивно
+	node_t* helpdelete(node_t *&root, int data) {
+		//Если корень нулевой, то просто возвращаем вставляемый элемент
+		if (root == nullptr)
+			return root;
+		//Для правого или левого рекурсиво вызываем наш метод
+		if (data < root->data)
+			return helpdelete(root->left, data);
+		if (data > root->data)
+			return helpdelete(root->right, data);
+		//есди это последний узел, то тоже возвращаем его
+		if (root->left == nullptr || root->right == nullptr)
+			return root;
+		//вводим доп переменную, если находим наш элемент
+		node_t *temp = minValueNode(root->right);//это будет минимальное значение в правой ветке
+		root->data = temp->data;//минимальное значение правого ряда назначаем в наш узел и рекурсивно вызываем функцию для проверки нужного узла
+		return helpdelete(root->right, temp->data);
+	}
+	
+	//Само удаление
+	void deleteValue(int data) {
+		node_t *node = helpdelete(root, data);
+		fixDelete(node);
+	}
 
+	//нахождение минимального элемента
+	node_t *minValueNode(node_t *&node) {
+		node_t *ptr = node;
+		while (ptr->left != nullptr)
+			ptr = ptr->left;
+		return ptr;
+	}
+
+
+	//Веселье после удаления
+	void fixDelete(node_t *&node) {
+		if (node == nullptr)
+			return;
+
+		if (node == root) {
+			root = nullptr;
+			return;
+		}
+		// Если родитель или один из его потомков красные
+		if (getColor(node) == RED || getColor(node->left) == RED || getColor(node->right) == RED) {
+			node_t *child = (node->left != nullptr ? node->left : node->right);
+			//если наш узел левый потомок
+			if (node == node->parent->left) {
+				node->parent->left = child;//то ставим на его место меньшего сына
+				if (child != nullptr)
+					child->parent = node->parent;
+				setColor(child, BLACK);//и задаем ему черный цвет
+				delete (node);
+			}
+			//если наш узел правый потомок
+			else {
+				node->parent->right = child;//то ставим также на его место меньшего сына
+				if (child != nullptr)
+					child->parent = node->parent;
+				setColor(child, BLACK);//также окрашиваем в черный
+				delete (node);
+			}
+		}
+		//если наш узел черный или у него есть черный сын, то придется все передвигать:
+		//для этого также вводим новый цвет DOUBLE_BLACK, который поможет нам лучше ориентироваться в дереве
+		else {
+			node_t *sibling = nullptr;
+			node_t *parent = nullptr;
+			node_t *ptr = node;
+			setColor(ptr, DOUBLE_BLACK); // по факту это означает, что у нас нет красных сыновей и сам узел черный
+			//создаем цикл, чтобы, если что-то сдвинется, то нигде выше не нарушились свойства дерева
+			while (ptr != root && getColor(ptr) == DOUBLE_BLACK) {
+				parent = ptr->parent;
+				//если узел левый сын, то назначаем брата и ориентируемся на его цвет
+				if (ptr == parent->left) {
+					sibling = parent->right;
+					//если брат красный
+					if (getColor(sibling) == RED) {
+						setColor(sibling, BLACK);//то делаем его черным, а
+						setColor(parent, RED);//родителя красным
+						rotateLeft(parent);//и поворачиваем
+					}
+					//если брат черный
+					else {
+						if (getColor(sibling->left) == BLACK && getColor(sibling->right) == BLACK) { //смотрим, есть ли у него черные потомки
+							setColor(sibling, RED);//делаем его красным
+							if (getColor(parent) == RED)
+								setColor(parent, BLACK);//если родитель красный, то делаем его черным, а черный, то делаем DOUBLE_BLACK
+							else
+								setColor(parent, DOUBLE_BLACK);
+							ptr = parent;//переносим указатель
+						}
+						//если у брата один из потомков красный, то смотрим на них
+						else {
+							//если правый черный, то меняем цвета и поворачиваем вправо
+							if (getColor(sibling->right) == BLACK) {
+								setColor(sibling->left, BLACK);
+								setColor(sibling, RED);
+								rotateRight(sibling);
+								sibling = parent->right;
+							}
+							//снова меняем цвета и еще раз поворачиваем
+							setColor(sibling, parent->color);
+							setColor(parent, BLACK);
+							setColor(sibling->right, BLACK);
+							rotateLeft(parent);
+							break;
+						}
+					}
+				}
+				//Если правый сын, то также ориентируемся на брата
+				else {
+					sibling = parent->left;
+					//если он красный, то просто меняем цвет и поворачваем
+					if (getColor(sibling) == RED) {
+						setColor(sibling, BLACK);
+						setColor(parent, RED);
+						rotateRight(parent);
+					}
+					//в ином случае также ориентируемся на сыновей
+					else {
+						if (getColor(sibling->left) == BLACK && getColor(sibling->right) == BLACK) {
+							setColor(sibling, RED);
+							if (getColor(parent) == RED)
+								setColor(parent, BLACK);
+							else
+								setColor(parent, DOUBLE_BLACK);
+							ptr = parent;
+						}
+						else {
+							if (getColor(sibling->left) == BLACK) {
+								setColor(sibling->right, BLACK);
+								setColor(sibling, RED);
+								rotateLeft(sibling);
+								sibling = parent->left;
+							}
+							setColor(sibling, parent->color);
+							setColor(parent, BLACK);
+							setColor(sibling->left, BLACK);
+							rotateRight(parent);
+							break;
+						}
+					}
+				}
+			}
+			if (node == node->parent->left)
+				node->parent->left = nullptr;
+			else
+				node->parent->right = nullptr;
+			delete(node);
+			setColor(root, BLACK);
+		}
+	}
 
 	// Rotate a node x to the left    //
 	//        x                y      //
