@@ -161,13 +161,17 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 }
 TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
     RBT<int> tree;
+    std::ostringstream ostream;
     REQUIRE( tree.root() == nullptr );
-    REQUIRE( tree.print(cout, tree.root()) == "" );
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() == "" );
     tree.insert( 10 );
-    REQUIRE( tree.print(cout, tree.root()) == "--b10" );
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() == "--b10" );
     //REQUIRE( tree.size() == 1 );
     tree.remove( 10 );
-    REQUIRE( tree.print(cout, tree.root()) == "" );
+    tree.print(ostream, tree.root());
+    REQUIRE( ostream.str() == "" );
     REQUIRE( tree.root() == nullptr );
     {
         RBT<int> tree;
@@ -185,7 +189,8 @@ TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
         //            /  \
         //           /    \
         //         r3      r5
-        REQUIRE( tree.print(cout, tree.root()) == 	"------r5\n"
+        tree.print(ostream, tree.root());
+        REQUIRE( ostream.str() == 	     		"------r5\n"
 							"----b4\n"
 							"------r3\n"
 							"--b2\n"
@@ -198,6 +203,7 @@ TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
 TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
     {
         RBT<int> tree;
+	std::ostringstream ostream;
         SECTION( "when brother is black and his sons" ) {
         RBT<int> tree;
 	tree.insert( 1 );
@@ -216,14 +222,16 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
             tree.remove( 4 );
             tree.remove( 4 );
             tree.remove( 8 );
-        REQUIRE( tree.print(cout, tree.root()) == 	"----b9\n"
+        tree.print(ostream, tree.root());
+        REQUIRE( ostream.str() ==			"----b9\n"
 							"------r7\n"
 							"--b6\n"
 							"------b2\n"
 							"----r2\n"
 							"------b1\n" );
         tree.remove( 9 );
-        REQUIRE( tree.print(cout, tree.root()) == 	"----b7\n"
+        tree.print(ostream, tree.root());
+        REQUIRE( ostream.str() ==			"----b7\n"
 							"--b6\n"
 							"------b2\n"
 							"----r2\n"
@@ -243,7 +251,8 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
             tree.insert( 11 );
             tree.insert( 0 );
             tree.remove( 3 );
-            REQUIRE( tree.print(cout, tree.root()) =="----------r11\n"
+            tree.print(ostream, tree.root());
+        REQUIRE( ostream.str() ==			"----------r11\n"
 							"--------b10\n"
 							"----------r9\n"
 							"------r8\n"
@@ -255,7 +264,8 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
 							"----b1\n"
 							"------b0\n" );
             tree.remove( 2 );
-            REQUIRE( tree.print(cout, tree.root()) =="--------r11\n"
+            tree.print(ostream, tree.root());
+        REQUIRE( ostream.str() ==			"--------r11\n"
 							"------b10\n"
 							"--------r9\n"
 							"----b8\n"
@@ -285,7 +295,8 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
             tree.insert( 5 );
             tree.insert( 5 );
             tree.insert( 5 );
-            REQUIRE( tree.print(cout, tree.root())== "------b8\n"
+            tree.print(ostream, tree.root());
+        REQUIRE( ostream.str() ==			 "------b8\n"
 							"--------b7\n"
 							"----r6\n"
 							"------------r5\n"
@@ -299,7 +310,8 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
 							"----b1\n"
 							"------b0\n" );
             tree.remove( 2 );
-            REQUIRE( tree.print(cout, tree.root()) == "--------r11\n"
+            tree.print(ostream, tree.root());
+        REQUIRE( ostream.str() ==			 "--------r11\n"
 							"------b10\n"
 							"--------r9\n"
 							"----b8\n"
