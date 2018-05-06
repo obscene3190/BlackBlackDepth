@@ -22,36 +22,36 @@ TEST_CASE("finding tree")
 TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
     RBT<int> tree;
     REQUIRE( tree.root() == nullptr );
-    REQUIRE( tree.print(ostream, tree.root()) == "" );
+    REQUIRE( tree.print(cout, tree.root()) == "" );
     tree.insert( 10 );
-    REQUIRE( tree.print(ostream, tree.root()) == "--b10\n" );
+    REQUIRE( tree.print(cout, tree.root()) == "--b10\n" );
     tree.insert( 85 );
-    REQUIRE( tree.print(ostream, tree.root()) == "----r85\n"
+    REQUIRE( tree.print(cout, tree.root()) == "----r85\n"
 	    					 "--b10\n" );
     tree.insert( 15 );
-    REQUIRE( tree.print(ostream, tree.root()) == "----r85\n"
+    REQUIRE( tree.print(cout, tree.root()) == "----r85\n"
 	    					 "--b15\n"
 	   					 "----r10\n");
     tree.insert( 70 );
-    REQUIRE( tree.print(ostream, tree.root()) == "----b85\n"
+    REQUIRE( tree.print(cout, tree.root()) == "----b85\n"
 						 "------r70\n"
 						 "--b15\n"
 						 "----b10\n" );
     tree.insert( 20 );
-    REQUIRE( tree.print(ostream, tree.root()) == 	"------r85\n"
+    REQUIRE( tree.print(cout, tree.root()) == 	"------r85\n"
 							"----b70\n"
 							"------r20\n"
 							"--b15\n"
 							"----b10\n" );
     tree.insert( 60 );
-    REQUIRE( tree.print(ostream, tree.root()) == 	"------b85\n"
+    REQUIRE( tree.print(cout, tree.root()) == 	"------b85\n"
 							"----r70\n"
 							"--------r60\n"
 							"------b20\n"
 							"--b15\n"
 							"----b10\n" );
     tree.insert( 30 );
-    REQUIRE( tree.print(ostream, tree.root()) == 	"------b85\n"
+    REQUIRE( tree.print(cout, tree.root()) == 	"------b85\n"
 							"----r70\n"
 							"--------r60\n"
 							"------b30\n"
@@ -59,7 +59,7 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"--b15\n"
 							"----b10\n" );
     tree.insert( 50 );
-    REQUIRE( tree.print(ostream, tree.root()) == 	"------b85\n"
+    REQUIRE( tree.print(cout, tree.root()) == 	"------b85\n"
 							"----r70\n"
 							"------b60\n"
 							"--------r50\n"
@@ -68,7 +68,7 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----r15\n"
 							"------b10\n" );
     tree.insert( 65 );
-    REQUIRE( tree.print(ostream, tree.root()) == 	"------b85\n"
+    REQUIRE( tree.print(cout, tree.root()) == 	"------b85\n"
 							"----r70\n"
 							"--------r65\n"
 							"------b60\n"
@@ -78,7 +78,7 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----r15\n"
 							"------b10\n" );
     tree.insert( 80 );
-    REQUIRE( tree.print(ostream, tree.root()) == 	"------b85\n"
+    REQUIRE( tree.print(cout, tree.root()) == 	"------b85\n"
 							"--------r80\n"
 							"----r70\n"
 							"--------r65\n"
@@ -89,7 +89,7 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----r15\n"
 							"------b10\n" );
     tree.insert( 90 );
-    REQUIRE( tree.print(ostream, tree.root()) == 	"--------r90\n"
+    REQUIRE( tree.print(cout, tree.root()) == 	"--------r90\n"
 							"------b85\n"
 							"--------r80\n"
 							"----r70\n"
@@ -101,7 +101,7 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----r15\n"
 							"------b10\n" );
     tree.insert( 40 );
-    REQUIRE( tree.print(ostream, tree.root()) == 	"--------r90\n"
+    REQUIRE( tree.print(cout, tree.root()) == 	"--------r90\n"
 							"------b85\n"
 							"--------r80\n"
 							"----b70\n"
@@ -114,7 +114,7 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----b15\n"
 							"------b10\n" );
     tree.insert( 5 );
-    REQUIRE( tree.print(ostream, tree.root()) == 	"--------r90\n"
+    REQUIRE( tree.print(cout, tree.root()) == 	"--------r90\n"
 							"------b85\n"
 							"--------r80\n"
 							"----b70\n"
@@ -128,7 +128,7 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"------b10\n"
 							"--------r5\n" );
     tree.insert( 55 );
-    REQUIRE( tree.print(ostream, tree.root()) == 	"--------r90\n"
+    REQUIRE( tree.print(cout, tree.root()) == 	"--------r90\n"
 							"------b85\n"
 							"--------r80\n"
 							"----b70\n"
@@ -146,12 +146,12 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
     RBT<int> tree;
     REQUIRE( tree.root() == nullptr );
-    REQUIRE( tree.print(ostream, tree.root()) == "" );
+    REQUIRE( tree.print(cout, tree.root()) == "" );
     tree.insert( 10 );
-    REQUIRE( tree.print(ostream, tree.root()) == "--b10" );
+    REQUIRE( tree.print(cout, tree.root()) == "--b10" );
     //REQUIRE( tree.size() == 1 );
     tree.remove( 10 );
-    REQUIRE( tree.print(ostream, tree.root()) == "" );
+    REQUIRE( tree.print(cout, tree.root()) == "" );
     REQUIRE( tree.root() == nullptr );
     {
         RBT<int> tree;
@@ -169,7 +169,7 @@ TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
         //            /  \
         //           /    \
         //         r3      r5
-        REQUIRE( tree.print(ostream, tree.root()) == 	"------r5\n"
+        REQUIRE( tree.print(cout, tree.root()) == 	"------r5\n"
 							"----b4\n"
 							"------r3\n"
 							"--b2\n"
@@ -200,14 +200,14 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
             tree.remove( 4 );
             tree.remove( 4 );
             tree.remove( 8 );
-        REQUIRE( tree.print(ostream, tree.root()) == 	"----b9\n"
+        REQUIRE( tree.print(cout, tree.root()) == 	"----b9\n"
 							"------r7\n"
 							"--b6\n"
 							"------b2\n"
 							"----r2\n"
 							"------b1\n" );
         tree.remove( 9 );
-        REQUIRE( tree.print(ostream, tree.root()) == 	"----b7\n"
+        REQUIRE( tree.print(cout, tree.root()) == 	"----b7\n"
 							"--b6\n"
 							"------b2\n"
 							"----r2\n"
@@ -227,7 +227,7 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
             tree.insert( 11 );
             tree.insert( 0 );
             tree.remove( 3 );
-            REQUIRE( tree.print(ostream, tree.root()) =="----------r11\n"
+            REQUIRE( tree.print(cout, tree.root()) =="----------r11\n"
 							"--------b10\n"
 							"----------r9\n"
 							"------r8\n"
@@ -239,7 +239,7 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
 							"----b1\n"
 							"------b0\n" );
             tree.remove( 2 );
-            REQUIRE( tree.print(ostream, tree.root()) =="--------r11\n"
+            REQUIRE( tree.print(cout, tree.root()) =="--------r11\n"
 							"------b10\n"
 							"--------r9\n"
 							"----b8\n"
@@ -269,7 +269,7 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
             tree.insert( 5 );
             tree.insert( 5 );
             tree.insert( 5 );
-            REQUIRE( tree.print(ostream, tree.root())== "------b8\n"
+            REQUIRE( tree.print(cout, tree.root())== "------b8\n"
 							"--------b7\n"
 							"----r6\n"
 							"------------r5\n"
@@ -283,7 +283,7 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
 							"----b1\n"
 							"------b0\n" );
             tree.remove( 2 );
-            REQUIRE( tree.print(ostream, tree.root()) == "--------r11\n"
+            REQUIRE( tree.print(cout, tree.root()) == "--------r11\n"
 							"------b10\n"
 							"--------r9\n"
 							"----b8\n"
