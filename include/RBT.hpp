@@ -73,7 +73,7 @@ public:
 		return helpdelete(root->right, temp->value);
 	}
 
-	void deleteValue(int data) {
+	void remove(int data) {
 		node_t *node = helpdelete(root_, data);
 		fixDelete(node);
 	}
