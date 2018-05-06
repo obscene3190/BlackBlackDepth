@@ -29,38 +29,44 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
     tree.print(ostream, tree.root());
     REQUIRE( ostream.str() == "--b10\n" );
     tree.insert( 85 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	 "----r85\n"
+    std::ostringstream ostream1;
+    tree.print(ostream1, tree.root());
+    REQUIRE( ostream1.str() ==	 "----r85\n"
 	    			 "--b10\n" );
     tree.insert( 15 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	  "----r85\n"
+	std::ostringstream ostream2;
+    tree.print(ostream2, tree.root());
+    REQUIRE( ostream2.str() ==	  "----r85\n"
 	    					 "--b15\n"
 	   					 "----r10\n");
     tree.insert( 70 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	 		 "----b85\n"
+	std::ostringstream ostream3;
+    tree.print(ostream3, tree.root());
+    REQUIRE( ostream3.str() ==	 		 "----b85\n"
 						 "------r70\n"
 						 "--b15\n"
 						 "----b10\n" );
     tree.insert( 20 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	 		  	"------r85\n"
+	std::ostringstream ostream4;
+    tree.print(ostream4, tree.root());
+    REQUIRE( ostream4.str() ==	 		  	"------r85\n"
 							"----b70\n"
 							"------r20\n"
 							"--b15\n"
 							"----b10\n" );
     tree.insert( 60 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	 		  	"------b85\n"
+	std::ostringstream ostream5;
+    tree.print(ostream5, tree.root());
+    REQUIRE( ostream5.str() ==	 		  	"------b85\n"
 							"----r70\n"
 							"--------r60\n"
 							"------b20\n"
 							"--b15\n"
 							"----b10\n" );
     tree.insert( 30 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	 		  	"------b85\n"
+	std::ostringstream ostream6;
+    tree.print(ostream6, tree.root());
+    REQUIRE( ostream6.str() ==	 		  	"------b85\n"
 							"----r70\n"
 							"--------r60\n"
 							"------b30\n"
@@ -68,8 +74,9 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"--b15\n"
 							"----b10\n" );
     tree.insert( 50 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	 		  	"------b85\n"
+	std::ostringstream ostream7;
+    tree.print(ostream7, tree.root());
+    REQUIRE( ostream7.str() ==	 		  	"------b85\n"
 							"----r70\n"
 							"------b60\n"
 							"--------r50\n"
@@ -78,8 +85,9 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----r15\n"
 							"------b10\n" );
     tree.insert( 65 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	 		  	"------b85\n"
+	std::ostringstream ostream8;
+    tree.print(ostream8, tree.root());
+    REQUIRE( ostream8.str() ==	 		  	"------b85\n"
 							"----r70\n"
 							"--------r65\n"
 							"------b60\n"
@@ -89,8 +97,9 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----r15\n"
 							"------b10\n" );
     tree.insert( 80 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	 		  	"------b85\n"
+	std::ostringstream ostream9;
+    tree.print(ostream9, tree.root());
+    REQUIRE( ostream9.str() ==	 		  	"------b85\n"
 							"--------r80\n"
 							"----r70\n"
 							"--------r65\n"
@@ -101,8 +110,9 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----r15\n"
 							"------b10\n" );
     tree.insert( 90 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	 		  	"--------r90\n"
+	std::ostringstream ostream11;
+    tree.print(ostream11, tree.root());
+    REQUIRE( ostream11.str() ==	 		  	"--------r90\n"
 							"------b85\n"
 							"--------r80\n"
 							"----r70\n"
@@ -114,8 +124,9 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----r15\n"
 							"------b10\n" );
     tree.insert( 40 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	 		  	"--------r90\n"
+	std::ostringstream ostream12;
+    tree.print(ostream12, tree.root());
+    REQUIRE( ostream12.str() ==	 		  	"--------r90\n"
 							"------b85\n"
 							"--------r80\n"
 							"----b70\n"
@@ -128,8 +139,9 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"----b15\n"
 							"------b10\n" );
     tree.insert( 5 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	 		  	"--------r90\n"
+	std::ostringstream ostream13;
+    tree.print(ostream13, tree.root());
+    REQUIRE( ostream13.str() ==	 		  	"--------r90\n"
 							"------b85\n"
 							"--------r80\n"
 							"----b70\n"
@@ -143,8 +155,9 @@ TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
 							"------b10\n"
 							"--------r5\n" );
     tree.insert( 55 );
-    tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() ==	 		  	"--------r90\n"
+	std::ostringstream ostream14;
+    tree.print(ostream14, tree.root());
+    REQUIRE( ostream14.str() ==	 		  	"--------r90\n"
 							"------b85\n"
 							"--------r80\n"
 							"----b70\n"
@@ -167,7 +180,7 @@ TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
     REQUIRE( ostream.str() == "" );
     tree.insert( 10 );
     tree.print(ostream, tree.root());
-    REQUIRE( ostream.str() == "--b10" );
+    REQUIRE( ostream.str() == "--b10\n" );
     //REQUIRE( tree.size() == 1 );
     tree.remove( 10 );
     tree.print(ostream, tree.root());
@@ -230,8 +243,9 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
 							"----r2\n"
 							"------b1\n" );
         tree.remove( 9 );
-        tree.print(ostream, tree.root());
-        REQUIRE( ostream.str() ==			"----b7\n"
+		std::ostringstream ostream1;
+        tree.print(ostream1, tree.root());
+        REQUIRE( ostream1.str() ==			"----b7\n"
 							"--b6\n"
 							"------b2\n"
 							"----r2\n"
@@ -264,8 +278,9 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
 							"----b1\n"
 							"------b0\n" );
             tree.remove( 2 );
-            tree.print(ostream, tree.root());
-        REQUIRE( ostream.str() ==			"--------r11\n"
+		std::ostringstream ostream3;
+            tree.print(ostream3, tree.root());
+        REQUIRE( ostream3.str() ==			"--------r11\n"
 							"------b10\n"
 							"--------r9\n"
 							"----b8\n"
@@ -310,8 +325,9 @@ TEST_CASE( "elements can be removed from rb tree ", "[remove, bug]" ) {
 							"----b1\n"
 							"------b0\n" );
             tree.remove( 2 );
-            tree.print(ostream, tree.root());
-        REQUIRE( ostream.str() ==			 "--------r11\n"
+		std::ostringstream ostream2;
+            tree.print(ostream2, tree.root());
+        REQUIRE( ostream2.str() ==			 "--------r11\n"
 							"------b10\n"
 							"--------r9\n"
 							"----b8\n"
