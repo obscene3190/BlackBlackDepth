@@ -346,11 +346,11 @@ public:
 				print(stream, ptr->right, i);
 				i--;
 			}
-			/*for (size_t k = 0; k < i; k++) {
+			for (size_t k = 0; k < i; k++) {
 				stream << "--";
-			}*/
+			}
 			ptr->color == RED ? stream<<"r" : stream << "b";
-			stream <<ptr->value;
+			stream <<ptr->value<<endl;
 			if (ptr->left != nullptr) {
 				i++;
 				print(stream, ptr->left, i);
