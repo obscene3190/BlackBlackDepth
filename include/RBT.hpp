@@ -3,7 +3,7 @@
 #include <string>
 //#include <bits/stdc++.h>
 using namespace std;
-enum Color { RED, BLACK }; // enum это сгруппированный набор целочисленных констант. Называют это перечислением.
+enum Color { RED, BLACK, DOUBLE_BLACK}; // enum это сгруппированный набор целочисленных констант. Называют это перечислением.
 
 template <typename T>
 class RBT {
@@ -20,20 +20,20 @@ public:
 	RBT() {
 		root_ = nullptr;
 	}
-    	//Вспомогательый метод для установки цвета элемента дерева
+	//Вспомогательый метод для установки цвета элемента дерева
 	void setColor(node_t *&node, int color) {
 		if (node == nullptr)
 			return;
 		node->color = color;
 	}
-    	//Вспомогательый метод для плучения цвета дерева
+	//Вспомогательый метод для плучения цвета дерева
 	int getColor(node_t *&node) {
 		if (node == nullptr)
 			return BLACK;
 		return node->color;
 	}
-    
-    	//Функция поиска элемента в дереве, возвращающая переменную типа bool
+
+	//Функция поиска элемента в дереве, возвращающая переменную типа bool
 	bool find(T value) const {
 		if (root_ == nullptr) {
 			return false;
@@ -52,84 +52,7 @@ public:
 		}
 		return false;
 	}
-    
-    	//Вспомогательный метод поиска места и вставки узла, вызываемый рекурсивно
-	node_t * helpinsert(node_t *&root, node_t *&ptr) {
-		//Если корень нулевой, то просто возвращаем вставляемый элемент
-		if (root == nullptr)
-			return ptr;
-        	//Если корень не пустой, то движемся по дереву в поисках[смысла жизни] подходящего места для нашего элемента по 
-		//классической схеме, вызывая нашу функцию рекурсивно для продвижения по дереву
-		if (ptr->value < root->value) {
-			root->left = helpinsert(root->left, ptr);
-			root->left->parent = root;
-		}
-		else if (ptr->value > root->value) {
-			root->right = helpinsert(root->right, ptr);
-			root->right->parent = root;
-		}
-		return root;
-	}
-    	//Вставка непосредственно значения
-	void insert(T n) {
-		if (!(find(n))) { //УСЛОВИЕ: Если элемент уже есть в дереве, то не вставляем его
-			node_t *node = new node_t();
-			node->value = n;
-			root_ = helpinsert(root_, node);//Используем ранее написанную функцию для добавления узла
-			fixInsert(node);//После вставки узла необходимо проверить, сохранилась ли BLACK DEPTH и соответствует ли дерево своим свойствам
-		}
-		else std::cout << "Sorry, this value has been added before" << std::endl;
-	}
-    
-    	//Метод для регулировки дерева просле вставки в него элемента
-	void fixInsert(node_t *&ptr) {
-		node_t *parent = nullptr;
-		node_t *grandparent = nullptr;
-		//Трудности возникают только тогда, когда родитель вставляемого элемента тоже красный, ведь по свойству RBT у красного элемента может быть только черный потомок 
-		while ((ptr != root_) && (getColor(ptr) == RED) && (getColor(ptr->parent) == RED)) {
-			parent = ptr->parent;
-			grandparent = parent->parent;
-			if (parent == grandparent->left) {  //Если родитель нашего объекта левый ребенок, то назначаем "дядю" нашего вставляемого элемента
-				node_t *uncle = grandparent->right;
-				if (getColor(uncle) == RED) { //Если дядя красный, то просто делаем замену цветов:
-					setColor(uncle, BLACK); //дядя и родитель становятся красными, а прародитель черным, таким образом сохраняется BLACK DEPTH
-					setColor(parent, BLACK);
-					setColor(grandparent, RED);
-					ptr = grandparent;
-				}
-				else {//Если дядя черный, то необходимо будет сделать повороты:
-					if (ptr == parent->right) { //если наш элемент это правый ребенок, то мы делаем поворот влево
-						rotateLeft(parent);
-						ptr = parent;
-						parent = ptr->parent;
-					}
-					rotateRight(grandparent);
-					swap(parent->color, grandparent->color);
-					ptr = parent;
-				}
-			}
-			else {//Если же родитель правый, то также рассматривается 2 случая относительно дяди, если он есть
-				node_t *uncle = grandparent->left;
-				if (getColor(uncle) == RED) {
-					setColor(uncle, BLACK);
-					setColor(parent, BLACK);
-					setColor(grandparent, RED);
-					ptr = grandparent;
-				}
-				else {
-					if (ptr == parent->left) {
-						rotateRight(parent);
-						ptr = parent;
-						parent = ptr->parent;
-					}
-					rotateLeft(grandparent);
-					swap(parent->color, grandparent->color);
-					ptr = parent;
-				}
-			}
-		}
-		setColor(root_, BLACK); //корень всегда должен быть черным
-	}
+
 
 	//Вспомогательный метод поиска места и удаления узла, вызываемый рекурсивно
 	node_t* helpdelete(node_t *&root, int data) {
@@ -137,22 +60,21 @@ public:
 		if (root == nullptr)
 			return root;
 		//Для правого или левого рекурсиво вызываем наш метод
-		if (data < root->data)
+		if (data < root->value)
 			return helpdelete(root->left, data);
-		if (data > root->data)
+		if (data > root->value)
 			return helpdelete(root->right, data);
 		//есди это последний узел, то тоже возвращаем его
 		if (root->left == nullptr || root->right == nullptr)
 			return root;
 		//вводим доп переменную, если находим наш элемент
 		node_t *temp = minValueNode(root->right);//это будет минимальное значение в правой ветке
-		root->data = temp->data;//минимальное значение правого ряда назначаем в наш узел и рекурсивно вызываем функцию для проверки нужного узла
-		return helpdelete(root->right, temp->data);
+		root->value = temp->value;//минимальное значение правого ряда назначаем в наш узел и рекурсивно вызываем функцию для проверки нужного узла
+		return helpdelete(root->right, temp->value);
 	}
-	
-	//Само удаление
+
 	void deleteValue(int data) {
-		node_t *node = helpdelete(root, data);
+		node_t *node = helpdelete(root_, data);
 		fixDelete(node);
 	}
 
@@ -170,8 +92,8 @@ public:
 		if (node == nullptr)
 			return;
 
-		if (node == root) {
-			root = nullptr;
+		if (node == root_) {
+			root_ = nullptr;
 			return;
 		}
 		// Если родитель или один из его потомков красные
@@ -202,7 +124,7 @@ public:
 			node_t *ptr = node;
 			setColor(ptr, DOUBLE_BLACK); // по факту это означает, что у нас нет красных сыновей и сам узел черный
 			//создаем цикл, чтобы, если что-то сдвинется, то нигде выше не нарушились свойства дерева
-			while (ptr != root && getColor(ptr) == DOUBLE_BLACK) {
+			while (ptr != root_ && getColor(ptr) == DOUBLE_BLACK) {
 				parent = ptr->parent;
 				//если узел левый сын, то назначаем брата и ориентируемся на его цвет
 				if (ptr == parent->left) {
@@ -281,9 +203,89 @@ public:
 			else
 				node->parent->right = nullptr;
 			delete(node);
-			setColor(root, BLACK);
+			setColor(root_, BLACK);
 		}
 	}
+
+	//Вспомогательный метод поиска места и вставки узла, вызываемый рекурсивно
+	node_t * helpinsert(node_t *&root, node_t *&ptr) {
+		//Если корень нулевой, то просто возвращаем вставляемый элемент
+		if (root == nullptr)
+			return ptr;
+		//Если корень не пустой, то движемся по дереву в поисках[смысла жизни] подходящего места для нашего элемента по 
+		//классической схеме, вызывая нашу функцию рекурсивно для продвижения по дереву
+		if (ptr->value < root->value) {
+			root->left = helpinsert(root->left, ptr);
+			root->left->parent = root;
+		}
+		else if (ptr->value > root->value) {
+			root->right = helpinsert(root->right, ptr);
+			root->right->parent = root;
+		}
+		return root;
+	}
+	//Вставка непосредственно значения
+	void insert(T n) {
+		if (!(find(n))) { //УСЛОВИЕ: Если элемент уже есть в дереве, то не вставляем его
+			node_t *node = new node_t();
+			node->value = n;
+			root_ = helpinsert(root_, node);//Используем ранее написанную функцию для добавления узла
+			fixInsert(node);//После вставки узла необходимо проверить, сохранилась ли BLACK DEPTH и соответствует ли дерево своим свойствам
+		}
+		else std::cout << "Sorry, this value has been added before" << std::endl;
+	}
+
+	//Метод для регулировки дерева просле вставки в него элемента
+	void fixInsert(node_t *&ptr) {
+		node_t *parent = nullptr;
+		node_t *grandparent = nullptr;
+		//Трудности возникают только тогда, когда родитель вставляемого элемента тоже красный, ведь по свойству RBT у красного элемента может быть только черный потомок 
+		while ((ptr != root_) && (getColor(ptr) == RED) && (getColor(ptr->parent) == RED)) {
+			parent = ptr->parent;
+			grandparent = parent->parent;
+			if (parent == grandparent->left) {  //Если родитель нашего объекта левый ребенок, то назначаем "дядю" нашего вставляемого элемента
+				node_t *uncle = grandparent->right;
+				if (getColor(uncle) == RED) { //Если дядя красный, то просто делаем замену цветов:
+					setColor(uncle, BLACK); //дядя и родитель становятся красными, а прародитель черным, таким образом сохраняется BLACK DEPTH
+					setColor(parent, BLACK);
+					setColor(grandparent, RED);
+					ptr = grandparent;
+				}
+				else {//Если дядя черный, то необходимо будет сделать повороты:
+					if (ptr == parent->right) { //если наш элемент это правый ребенок, то мы делаем поворот влево
+						rotateLeft(parent);
+						ptr = parent;
+						parent = ptr->parent;
+					}
+					rotateRight(grandparent);
+					swap(parent->color, grandparent->color);
+					ptr = parent;
+				}
+			}
+			else {//Если же родитель правый, то также рассматривается 2 случая относительно дяди, если он есть
+				node_t *uncle = grandparent->left;
+				if (getColor(uncle) == RED) {
+					setColor(uncle, BLACK);
+					setColor(parent, BLACK);
+					setColor(grandparent, RED);
+					ptr = grandparent;
+				}
+				else {
+					if (ptr == parent->left) {
+						rotateRight(parent);
+						ptr = parent;
+						parent = ptr->parent;
+					}
+					rotateLeft(grandparent);
+					swap(parent->color, grandparent->color);
+					ptr = parent;
+				}
+			}
+		}
+		setColor(root_, BLACK); //корень всегда должен быть черным
+	}
+
+
 
 	// Rotate a node x to the left    //
 	//        x                y      //
@@ -361,20 +363,20 @@ public:
 	}
 	//Вспомогательный метод для удаления и деструктор(как и для обычного дерева)
 	void delete1(node_t * ptr) {
-        	if (ptr != nullptr) {
+		if (ptr != nullptr) {
 			if (ptr->right) {
-	    			delete1(ptr->right);
-        			}
-        		if (ptr->left) {
-	    			delete1(ptr->left);
-        			}
+				delete1(ptr->right);
+			}
+			if (ptr->left) {
+				delete1(ptr->left);
+			}
 			delete ptr;
 		}
 	}
 
-    ~RBT () {
-	if( root_ != nullptr) {
-		delete1(root_);
+	~RBT() {
+		if (root_ != nullptr) {
+			delete1(root_);
+		}
 	}
-     }
 };
