@@ -203,8 +203,8 @@ TEST_CASE( "elements can be removde from rb tree", "[remove]" ) {
         //            /  \
         //           /    \
         //         r3      r5
-        tree.print(ostream, tree.root());
-        REQUIRE( ostream.str() == 	     		"------r5\n"
+        tree.print(ostream1, tree.root());
+        REQUIRE( ostream1.str() == 	     		"------r5\n"
 							"----b4\n"
 							"------r3\n"
 							"--b2\n"
