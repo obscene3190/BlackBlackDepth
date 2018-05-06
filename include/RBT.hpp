@@ -3,7 +3,7 @@
 #include <string>
 //#include <bits/stdc++.h>
 using namespace std;
-enum Color { RED, BLACK, DOUBLE_BLACK}; // enum это сгруппированный набор целочисленных констант. Называют это перечислением.
+enum Color { RED, BLACK, DOUBLE_BLACK }; // enum это сгруппированный набор целочисленных констант. Называют это перечислением.
 
 template <typename T>
 class RBT {
@@ -43,7 +43,7 @@ public:
 			if (ptr->value == value) {
 				return true;
 			}
-			else if (value > ptr->value) {
+			else if (value >= ptr->value) {
 				ptr = ptr->right;
 			}
 			else if (value < ptr->value) {
@@ -123,7 +123,7 @@ public:
 			node_t *parent = nullptr;
 			node_t *ptr = node;
 			setColor(ptr, DOUBLE_BLACK); // по факту это означает, что у нас нет красных сыновей и сам узел черный
-			//создаем цикл, чтобы, если что-то сдвинется, то нигде выше не нарушились свойства дерева
+										 //создаем цикл, чтобы, если что-то сдвинется, то нигде выше не нарушились свойства дерева
 			while (ptr != root_ && getColor(ptr) == DOUBLE_BLACK) {
 				parent = ptr->parent;
 				//если узел левый сын, то назначаем брата и ориентируемся на его цвет
@@ -218,7 +218,7 @@ public:
 			root->left = helpinsert(root->left, ptr);
 			root->left->parent = root;
 		}
-		else if (ptr->value > root->value) {
+		else if (ptr->value >= root->value) {
 			root->right = helpinsert(root->right, ptr);
 			root->right->parent = root;
 		}
@@ -226,13 +226,11 @@ public:
 	}
 	//Вставка непосредственно значения
 	void insert(T n) {
-		if (!(find(n))) { //УСЛОВИЕ: Если элемент уже есть в дереве, то не вставляем его
 			node_t *node = new node_t();
 			node->value = n;
 			root_ = helpinsert(root_, node);//Используем ранее написанную функцию для добавления узла
 			fixInsert(node);//После вставки узла необходимо проверить, сохранилась ли BLACK DEPTH и соответствует ли дерево своим свойствам
-		}
-		else std::cout << "Sorry, this value has been added before" << std::endl;
+		
 	}
 
 	//Метод для регулировки дерева просле вставки в него элемента
@@ -349,8 +347,8 @@ public:
 			for (size_t k = 0; k < i; k++) {
 				stream << "--";
 			}
-			ptr->color == RED ? stream<<"r" : stream << "b";
-			stream <<ptr->value<<endl;
+			ptr->color == RED ? stream << "r" : stream << "b";
+			stream << ptr->value << endl;
 			if (ptr->left != nullptr) {
 				i++;
 				print(stream, ptr->left, i);
