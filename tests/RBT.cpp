@@ -21,13 +21,17 @@ TEST_CASE("finding tree")
 
 TEST_CASE( "elements can be inserted in rb tree", "[insert]" ) {
     RBT<int> tree;
+    std::ostringstream ostream;
     REQUIRE( tree.root() == nullptr );
-    REQUIRE( tree.print(cout, tree.root()) == "" );
+    tree.print(ostream, tree.root())
+    REQUIRE( ostream.str() == "" );
     tree.insert( 10 );
-    REQUIRE( tree.print(cout, tree.root()) == "--b10\n" );
+    tree.print(ostream, tree.root())
+    REQUIRE( ostream.str() == "--b10\n" );
     tree.insert( 85 );
-    REQUIRE( tree.print(cout, tree.root()) == "----r85\n"
-	    					 "--b10\n" );
+    tree.print(ostream, tree.root())
+    REQUIRE( ostream.str() ==	 "----r85\n"
+	    			 "--b10\n" );
     tree.insert( 15 );
     REQUIRE( tree.print(cout, tree.root()) == "----r85\n"
 	    					 "--b15\n"
